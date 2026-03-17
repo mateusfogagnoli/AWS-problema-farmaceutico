@@ -1,117 +1,80 @@
-# MetodoAWS-problema-farmac-utico-
-Projeto em andamento.
-
-# RELATÓRIO DE IMPLEMENTAÇÃO DE SERVIÇOS AWS
-
-**Data:** 27 de Fevereiro de 2026  
-**Empresa:** Abstergo Industries  
-**Responsável:** Juhani Otso Berg (Diretor de Operações da Divisão de Pesquisa Histórica)
+# ☣️ BioHazard Monitoring System (BMS)
+### **Property of Umbrella Corporation - Research & Development Division**
+**Project Classification: TOP SECRET / LEVEL 4 CLEARANCE**
 
 ---
 
-## Introdução
+## 📝 Introdução
 
-Este relatório apresenta o processo de implementação de ferramentas na empresa Abstergo Industries, realizado por Juhani Otso Berg. O objetivo do projeto foi elencar 3 serviços AWS, com a finalidade de realizar diminuição de custos imediatos na hospedagem e operação do nosso **Sistema de Rastreamento de Artefatos (SRA)**, desenvolvido em **Java/Spring Boot**.
+O **BioHazard Monitoring System (BMS)** é uma plataforma centralizada de monitoramento e controle de bioagentes, desenvolvida para gerenciar o ciclo de vida de pesquisas virais, incidentes laboratoriais e documentação científica da **Umbrella Corporation**.
 
----
+O sistema foi projetado para substituir infraestruturas legadas, focando em **alta disponibilidade**, **segurança de dados** e **otimização de custos operacionais** através de uma arquitetura nativa em nuvem (AWS).
 
-## Descrição do Projeto
-
-O projeto de implementação de ferramentas foi dividido em 3 etapas, focando na:
-
-- Conteinerização da API Spring Boot  
-- Otimização do Banco de Dados Relacional  
-- Armazenamento inteligente de arquivos de pesquisa  
-
-A seguir, serão descritas as etapas do projeto:
+> [!WARNING]  
+> O acesso a este repositório é restrito. Qualquer tentativa de acesso não autorizado disparará automaticamente o protocolo de contenção da Red Queen.
 
 ---
 
-## Etapa 1 — Amazon EC2 (Instâncias Spot) com Auto Scaling
+## 🛠️ Stack Tecnológica
 
-**Foco da ferramenta:**  
-Redução drástica de custos computacionais (até 90% de desconto).
+O BMS utiliza tecnologias de ponta para garantir que o monitoramento de bioagentes seja ininterrupto:
 
-**Descrição do caso de uso:**  
-Nossa API em Spring Boot processa grandes lotes de dados de memórias genéticas extraídas do Animus. Como esses processamentos em lote são flexíveis e podem ser interrompidos e retomados, utilizaremos instâncias EC2 Spot para rodar os contêineres Java.
-
-O Auto Scaling garantirá que as máquinas só rodem quando houver dados na fila para serem processados.
-
-**Benefícios principais:**
-
-- Redução extrema de custos computacionais  
-- Escalabilidade automática  
-- Uso eficiente de recursos  
+* **Linguagem:** Java 21
+* **Framework:** Spring Boot 3.x
+* **Gerenciador de Dependências:** Maven
+* **Banco de Dados:** PostgreSQL (Amazon Aurora)
+* **Ambiente de Desenvolvimento:** Ubuntu 24.04 LTS (Noble Numbat)
+* **IDE:** Intellij
 
 ---
 
-## Etapa 2 — Amazon Aurora Serverless v2 (PostgreSQL)
+## ☁️ Implementação de Serviços AWS
 
-**Foco da ferramenta:**  
-Otimização de custos de banco de dados e escalabilidade sob demanda.
+Para viabilizar as operações globais, o projeto implementa três serviços estratégicos focados em eficiência e redução de custos:
 
-**Descrição do caso de uso:**  
-Utilizado como o Banco de Dados principal do nosso backend Java para armazenar:
+### 1. Amazon EC2 (Instâncias Spot) + Auto Scaling
+* **Finalidade:** Processamento de sequenciamento genético e simulações de mutação em larga escala (T-Virus e variantes).
+* **Benefício:** Redução de até **90%** nos custos computacionais, utilizando a capacidade ociosa da AWS para processamentos em lote (Batch).
 
-- Coordenadas de localização dos Fragmentos do Éden  
-- Registros de agentes  
+### 2. Amazon Aurora Serverless v2 (PostgreSQL)
+* **Finalidade:** Persistência de registros críticos de amostras, dados de laboratórios e logs de incidentes biológicos.
+* **Benefício:** Ajuste automático de capacidade conforme a demanda (ex: picos durante auditorias ou contenções), garantindo pagamento apenas pelo que é consumido.
 
-Como as buscas por artefatos têm picos imprevisíveis, o Aurora Serverless ajusta a capacidade do banco em milissegundos, fazendo a Abstergo pagar apenas pela capacidade consumida.
-
-**Benefícios principais:**
-
-- Pagamento sob demanda  
-- Escalabilidade automática  
-- Eliminação de custos com servidores ociosos  
+### 3. Amazon S3 (Intelligent-Tiering)
+* **Finalidade:** Armazenamento de relatórios científicos, imagens microscópicas e evidências de campo (PDFs e mídias).
+* **Benefício:** Gerenciamento automático do ciclo de vida dos arquivos, movendo dados antigos de incidentes (ex: Arquivos de Raccoon City) para camadas de arquivamento de baixo custo.
 
 ---
 
-## Etapa 3 — Amazon S3 com Intelligent-Tiering
+## 🗄️ Modelagem de Dados
 
-**Foco da ferramenta:**  
-Redução de custos de armazenamento de longo prazo.
+A base de dados PostgreSQL é estruturada para garantir a rastreabilidade total de cada experimento:
 
-**Descrição do caso de uso:**  
-A API Spring Boot faz upload de:
-
-- Manuscritos antigos  
-- Fotos  
-- Relatórios de campo em PDF  
-
-O S3 Intelligent-Tiering monitora automaticamente o padrão de acesso e move arquivos não utilizados para camadas de armazenamento mais baratas, como o S3 Glacier.
-
-**Benefícios principais:**
-
-- Redução automática de custos  
-- Armazenamento otimizado  
-- Sem necessidade de gerenciamento manual  
+| Tabela | Função |
+| :--- | :--- |
+| **Virus** | Cadastro de cepas virais, níveis de risco e descrição. |
+| **Laboratorio** | Identificação de instalações e níveis de segurança (Biohazard Level). |
+| **Pesquisador** | Registro de cientistas e vinculação a centros de pesquisa. |
+| **Experimento** | Log de testes realizados, resultados e status da pesquisa. |
+| **Relatório** | Documentação final com referência segura para arquivos no S3. |
 
 ---
 
-## Conclusão
+## 🚀 API Endpoints (Preview)
 
-A implementação das ferramentas AWS na empresa Abstergo Industries proporcionará:
+A API segue o padrão RESTful para integração com sistemas de campo:
 
-- Redução estimada de **45% nos custos operacionais de TI**
-- Modelo de pagamento sob demanda (Serverless)
-- Armazenamento inteligente e automatizado
-- Maior eficiência operacional
-
-Recomenda-se a continuidade da utilização das ferramentas implementadas e a avaliação constante de novas tecnologias para melhoria contínua dos processos.
+* `POST /api/v1/virus` - Registra uma nova amostra viral.
+* `GET /api/v1/laboratorios` - Lista as instalações ativas.
+* `POST /api/v1/experimentos` - Inicia um novo protocolo de teste biológico.
+* `GET /api/v1/relatorios/download/{id}` - Recupera documentação segura do S3.
 
 ---
 
-## Anexos
+## 🔧 Configuração e Execução
 
-- Diagrama de Arquitetura AWS (Spring Boot + EC2 + Aurora + S3)
-- Planilha de estimativa de custos (AWS Pricing Calculator)
-- Documentação da API Swagger (Endpoints de rastreamento de artefatos)
-
----
-
-## Assinatura do Responsável pelo Projeto
-
-**Juhani Otso Berg**  
-Diretor de Operações  
-Divisão de Pesquisa Histórica  
-Abstergo Industries
+1. **Requisitos:** Java 21, Maven e PostgreSQL instalados.
+2. **Configuração:** Edite o `src/main/resources/application.properties` com suas credenciais AWS e DB.
+3. **Build:**
+   ```bash
+   mvn clean install
